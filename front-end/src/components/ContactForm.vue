@@ -13,7 +13,7 @@ const contatto = ref({
 
 const inviaMessaggio = async () => {
     const response = await axios.post('http://localhost:8080/api/contatto', contatto.value);
-    console.log(response.data);
+    console.log(response);
     emits('BackToPhotos');
 };
 
@@ -28,27 +28,27 @@ const backToPhoto = () => {
 <template>
     <div class="container">
         <div class="row">
-            <div class="col">
+            <div class="col-12">
                 <button class="btn btn-primary mb-5" @click="backToPhoto">Back</button>
-                <div>
-                    <form @submit.prevent="inviaMessaggio" >
-                        <div class="mb-3 input-group">
-                            <span class="input-group-text" id="basic-addon2">Nome</span>
-                            <input type="text" id="nome" class="form-control" v-model="contatto.nome" required>
-                        </div>
+                
+                <form @submit.prevent="inviaMessaggio" >
+                    <div class="mb-3 input-group">
+                        <span class="input-group-text" id="basic-addon2">Nome</span>
+                        <input type="text" id="nome" class="form-control" v-model="contatto.nome" required>
+                    </div>
 
-                        <div class="mb-3 input-group">
-                            <span class="input-group-text" id="basic-addon2">Email:</span>
-                            <input type="email" id="nome" class="form-control" v-model="contatto.email" required>
-                        </div>
+                    <div class="mb-3 input-group">
+                        <span class="input-group-text" id="basic-addon2">Email:</span>
+                        <input type="email" id="nome" class="form-control" v-model="contatto.email" required>
+                    </div>
 
-                        <div class="mb-3 input-group">
-                            <span class="input-group-text" id="basic-addon2">Testo</span>
-                            <textarea type="text" id="nome" class="form-control" v-model="contatto.messaggio" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-success">Invia Messaggio</button>
-                    </form>
-                </div>
+                    <div class="mb-3 input-group">
+                        <span class="input-group-text" id="basic-addon2">Testo</span>
+                        <textarea type="text" id="nome" class="form-control" v-model="contatto.messaggio" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success">Invia Messaggio</button>
+                </form>
+                
             </div>
         </div>
     </div>

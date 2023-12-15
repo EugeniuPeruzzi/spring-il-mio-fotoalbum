@@ -6,8 +6,10 @@ import org.java.spring.auth.db.pojo.User;
 import org.java.spring.auth.db.serv.RoleService;
 import org.java.spring.auth.db.serv.UserService;
 import org.java.spring.db.pojo.Category;
+import org.java.spring.db.pojo.Contatto;
 import org.java.spring.db.pojo.Photo;
 import org.java.spring.db.serv.CategoryService;
+import org.java.spring.db.serv.ContattoService;
 import org.java.spring.db.serv.PhotoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -28,6 +30,9 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner{
 	
 	@Autowired
 	private RoleService roleService;
+	
+	@Autowired
+	private ContattoService contattoService;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SpringIlMioFotoalbumApplication.class, args);
@@ -70,6 +75,10 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner{
 		photoService.save(ph3);
 		photoService.save(ph4);
 		
+		Contatto contatto1 = new Contatto("Franco", "franco@gmail.com", "Buongiorno voglio acquistare la tua foto");
+		Contatto contatto2 = new Contatto("Massimigliano", "max_power@gmail.com", "Quanto lo fai? A meno di 2$ non lo pago");
+		contattoService.save(contatto1);
+		contattoService.save(contatto2);
 		
 		
     	Role admin = new Role("admin");
