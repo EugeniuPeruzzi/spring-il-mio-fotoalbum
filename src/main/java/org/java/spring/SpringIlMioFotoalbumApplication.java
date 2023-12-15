@@ -64,17 +64,6 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner{
 		categoryService.save(cat10);
 		
 		
-		Photo ph1 = new Photo("albero morente", "La foto ritrae un albero morente avvolto in un'atmosfera di malinconia e decadimento. Le foglie, un tempo rigogliose e vibranti, ora appaiono disseccate e ingiallite, pronte a lasciare definitivamente i rami spogli. La corteccia mostra segni di deperimento, creando un contrasto visivo tra la forza della natura e la sua inevitabile fragilità.", "https://images.unsplash.com/photo-1610621062045-ef5f7201bb3f?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZmluZSUyMGFydCUyMHBob3RvZ3JhcGh5fGVufDB8fDB8fHww", true, cat1, cat3, cat6);
-		Photo ph2 = new Photo("uomo con valigia", " La valigia, logora ma carica di significato, poggia sulla superficie, testimone di viaggi passati o forse pronta per nuove avventure. La scena cattura un momento di transizione e di attesa, lasciando spazio a molteplici interpretazioni sulla storia e sul destino di questo viaggiatore. ", "https://shotkit.com/wp-content/uploads/2021/03/fine-art-photography.jpg", true, cat5,cat8,cat10);
-		Photo ph3 = new Photo("zebra", "La foto cattura l'essenza affascinante di una zebra in bianco e nero, mostrando la sua bellezza unica nella natura. La pelliccia striata di bianco e nero è chiaramente visibile, creando un motivo distintivo che si snoda in un armonioso contrasto.", "https://assets-global.website-files.com/60e4d0d0155e62117f4faef3/621d0551187b0816a87b197b_01-vortex.jpeg", true, cat4, cat7,cat3,cat9);
-		Photo ph4 = new Photo("terra e mare", "La fotografia cattura la serenità e l'isolamento di una scena marina in bianco e nero. La spiaggia si estende deserta, priva di presenze umane, creando un senso di tranquillità e pace. Le onde del mare lambiscono delicatamente la riva, lasciando impronte sabbiose sulla superficie della spiaggia.", "https://m.media-amazon.com/images/I/71JOXVVYfEL._UF894,1000_QL80_.jpg", true, cat5,cat8,cat3,cat4,cat1);
-		
-		
-		photoService.save(ph1);
-		photoService.save(ph2);
-		photoService.save(ph3);
-		photoService.save(ph4);
-		
 		Contatto contatto1 = new Contatto("Franco", "franco@gmail.com", "Buongiorno voglio acquistare la tua foto");
 		Contatto contatto2 = new Contatto("Massimigliano", "max_power@gmail.com", "Quanto lo fai? A meno di 2$ non lo pago");
 		contattoService.save(contatto1);
@@ -82,12 +71,31 @@ public class SpringIlMioFotoalbumApplication implements CommandLineRunner{
 		
 		
     	Role admin = new Role("admin");
+    	Role superAdmin = new Role("superadmin");
     	
     	roleService.save(admin);
+    	roleService.save(superAdmin);
     	
     	String pwd = AuthConf.passwordEncoder().encode("asd");
     	
-    	userService.save(new User("user2", pwd, admin)); 
+    	User user1 = new User("user1", pwd, admin);
+    	User user2 = new User("user2", pwd, admin);
+    	User superuser = new User("superuser", pwd, superAdmin);
+    	
+    	userService.save(user1);
+    	userService.save(user2); 
+    	userService.save(superuser); 
+
+		Photo ph1 = new Photo("albero morente", "La foto ritrae un albero morente avvolto in un'atmosfera di malinconia e decadimento. Le foglie, un tempo rigogliose e vibranti, ora appaiono disseccate e ingiallite, pronte a lasciare definitivamente i rami spogli. La corteccia mostra segni di deperimento, creando un contrasto visivo tra la forza della natura e la sua inevitabile fragilità.", "https://images.unsplash.com/photo-1610621062045-ef5f7201bb3f?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZmluZSUyMGFydCUyMHBob3RvZ3JhcGh5fGVufDB8fDB8fHww", true, user2 ,cat1, cat3, cat6);
+		Photo ph2 = new Photo("uomo con valigia", " La valigia, logora ma carica di significato, poggia sulla superficie, testimone di viaggi passati o forse pronta per nuove avventure. La scena cattura un momento di transizione e di attesa, lasciando spazio a molteplici interpretazioni sulla storia e sul destino di questo viaggiatore. ", "https://shotkit.com/wp-content/uploads/2021/03/fine-art-photography.jpg", true, user1 ,cat5,cat8,cat10);
+		Photo ph3 = new Photo("zebra", "La foto cattura l'essenza affascinante di una zebra in bianco e nero, mostrando la sua bellezza unica nella natura. La pelliccia striata di bianco e nero è chiaramente visibile, creando un motivo distintivo che si snoda in un armonioso contrasto.", "https://assets-global.website-files.com/60e4d0d0155e62117f4faef3/621d0551187b0816a87b197b_01-vortex.jpeg", true, user1 ,cat4, cat7,cat3,cat9);
+		Photo ph4 = new Photo("terra e mare", "La fotografia cattura la serenità e l'isolamento di una scena marina in bianco e nero. La spiaggia si estende deserta, priva di presenze umane, creando un senso di tranquillità e pace. Le onde del mare lambiscono delicatamente la riva, lasciando impronte sabbiose sulla superficie della spiaggia.", "https://m.media-amazon.com/images/I/71JOXVVYfEL._UF894,1000_QL80_.jpg", true, user1 ,cat5,cat8,cat3,cat4,cat1);
+		
+		
+		photoService.save(ph1);
+		photoService.save(ph2);
+		photoService.save(ph3);
+		photoService.save(ph4);
     	
 	}
 	

@@ -37,4 +37,5 @@ public class PhotoService {
     public List<Photo> findByVisibleTrue(){
     	return photoRepository.findByVisibleTrue();
     }
+   
 }
