@@ -73,7 +73,7 @@ public class PhotoController {
         return savePhoto(model, photo, bindingResult);
     }
     
-    @GetMapping("photos/edit/{id}")
+    @GetMapping("photo/edit/{id}")
     public String editPhoto(Model model, @PathVariable int id) {
         
         Photo photo = photoService.findById(id);
@@ -84,13 +84,13 @@ public class PhotoController {
         
         return "photoHTML/photoCreate";
     }
-    @PostMapping("photos/edit/{id}")
+    @PostMapping("photo/edit/{id}")
     public String updatePhoto(Model model, @Valid @ModelAttribute Photo photo, BindingResult bindingResult) {
         
         return savePhoto(model, photo, bindingResult);
     }
 
-    @PostMapping("/photos/delete/{id}")
+    @PostMapping("/photo/delete/{id}")
     public String deletePhoto(@PathVariable int id) {
         
         Photo photo = photoService.findById(id);
