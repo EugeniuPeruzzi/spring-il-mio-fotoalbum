@@ -27,6 +27,8 @@ public class PhotoController {
     @Autowired
     private CategoryService categoryService;
     
+
+    
 //    PHOTO INDEX
     @GetMapping
     public String getPhotos(Model model, @RequestParam(required = false) String name) {
@@ -35,9 +37,10 @@ public class PhotoController {
                             ? photoService.findAll()
                             : photoService.findByName(name);
         
+       
+        
         model.addAttribute("photos", photos);
         model.addAttribute("name", name == null ? "" : name);
-        
         return "photoHTML/photoIndex";
     }
     

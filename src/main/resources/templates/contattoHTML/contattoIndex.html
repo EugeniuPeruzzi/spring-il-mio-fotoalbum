@@ -1,0 +1,32 @@
+<!-- Head html -->
+<div th:replace="frags/frags :: headFragment"></div>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <h2 class="text-center">Tabella Contatti</h2>
+            <div class="col">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Email</th>
+                            <th>Messaggio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Utilizzo di Thymeleaf per il ciclo forEach -->
+                        <tr th:each="contatto : ${contatti}">
+                            <!-- Accesso alle proprietà dell'oggetto contatto -->
+                            <td th:text="${contatto.nome}">Nome</td>
+                            <td th:text="${contatto.email}">Email</td>
+                            <td th:text="${contatto.messaggio}">Messaggio</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
