@@ -15,7 +15,7 @@ const props = defineProps({
 
 // Modello per l'input di ricerca
 const search = ref('');
-// Proprietà per filtrare le pizze in base all'input di ricerca
+// Proprietà per filtrare le le foto in base all'input di ricerca
 const filteredPhotos = computed(() => {
     if (!search.value) return props.photos;
     return props.photos.filter(photo => photo.name.toLowerCase().includes(search.value.toLowerCase()));
@@ -26,8 +26,14 @@ const filteredPhotos = computed(() => {
 <template>
   <div class="container">
       <div class="row">
-          <h1 class="text-center mt-4">Il tuo album</h1>
+          <h1 class="text-center mb-4">Il tuo album FRONT END</h1>
           <!-- Lista delle foto -->
+          <div class="col-4">
+            <div class="input-group input-group-sm my-3">
+                <h3 class="d-inline-block me-3">Cerca</h3>
+                <input v-model="search" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+            </div>
+          </div>
           <div class="col-12">
               <div class="d-flex flex-wrap justify-content-center">
                   <!-- Loop attraverso tutte le foto -->
