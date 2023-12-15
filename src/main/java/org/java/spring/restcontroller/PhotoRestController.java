@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/photos")
 public class PhotoRestController {
 
-	@Autowired
-	private PhotoService photoService;
+    @Autowired
+    private PhotoService photoService;
+    
+    @GetMapping
+    public ResponseEntity<List<Photo>> getIndex() {
 
-	@GetMapping
-	public ResponseEntity<List<Photo>> getIndex() {
+        List<Photo> photos = photoService.findByVisibleTrue();
 
-		List<Photo> photos = photoService.findAll();
-
-		return new ResponseEntity<>(photos, HttpStatus.OK);
-	}
+        return new ResponseEntity<>(photos, HttpStatus.OK);
+    }
 }
