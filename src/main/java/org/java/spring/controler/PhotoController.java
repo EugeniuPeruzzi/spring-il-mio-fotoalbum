@@ -65,7 +65,7 @@ public class PhotoController {
         model.addAttribute("photo", photo);
         model.addAttribute("categories", categories);
         
-        return "photo-form";
+        return "photoINDEX/photoCreate";
     }
     @PostMapping("/photos/create")
     public String storePhoto(Model model, @Valid @ModelAttribute Photo photo, BindingResult bindingResult) {
