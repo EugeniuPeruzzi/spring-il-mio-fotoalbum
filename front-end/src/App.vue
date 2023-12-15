@@ -16,14 +16,27 @@ const getPhotos = async () => {
   photos.value = data.data;
 };
 
+const mostraIndex = ref(true);
+
+const cambiaVista = () => {
+  mostraIndex.value = false;
+};
+
+const backToPhoto = () => {
+  mostraIndex.value = true;
+};
+
 // HOOKS
 onMounted(getPhotos);
 </script>
 
 <template>
-  <photo-index :photos="photos" />
-  
+  <PhotoIndex v-if="mostraIndex" :photos="photos" @mostraFormContatto="cambiaVista" />
+  <ContactForm v-else @BackToPhotos="backToPhoto"/>
 </template>
+
+
+
 
 <style lang="scss" >
   @use './styles/generals.scss' as *;

@@ -1,9 +1,9 @@
 <script setup>
-import { ref, computed } from 'vue';
-import { defineProps, defineEmits } from 'vue';
+import { ref, computed, defineProps, defineEmits } from 'vue';
+
 
 // EMITS
-const emits = defineEmits(["openPizza"]);
+const emits = defineEmits(["mostraFormContatto"]);
 
 // Props
 const props = defineProps({
@@ -21,6 +21,11 @@ const filteredPhotos = computed(() => {
     return props.photos.filter(photo => photo.name.toLowerCase().includes(search.value.toLowerCase()));
 });
 
+// FUNCTIONS
+const contattaci = () => {
+  emits('mostraFormContatto');
+};
+
 </script>
 
 <template>
@@ -29,13 +34,14 @@ const filteredPhotos = computed(() => {
         <h1 class="text-center mb-4">Il tuo album FRONT END</h1>
         <!-- Input di ricerca -->
         <div class=" col-12">
-            <div class="input-group input-group-sm my-3 p-2 d-flex justify-content-center align-items-center rounded-5 border border-1" 
-            style="background-color: lightblue;"
-            >
-                <h3 class="d-inline-block me-3">Cerca</h3>
-                <div class="">
-                    <input v-model="search" style="width: 250px;" type="text" class="form-control"
+            <div class="input-group input-group-sm my-3 p-2 d-flex justify-content-center align-items-center" >
+                <div class="d-flex">
+                    <button class="btn btn-primary me-5" @click="contattaci">Contattaci</button>
+                    <div class="">
+                        <input v-model="search" style="width: 250px;" type="text" class="form-control"
                         aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                    </div>
+                    <h3 class="d-inline-block me-3">Cerca</h3>
                 </div>
             </div>
         </div>
