@@ -39,6 +39,9 @@
 										th:field="${photo.categories}" th:value="*{id}">
 								</div>
 							</div>
+							<div th:if="${#fields.hasErrors('categories')}" class="alert alert-danger mt-3">
+								<p th:errors="*{categories}" class="category-error"></p>
+							</div>
 						</div>
 					</div>
 					<div class="text-center my-5 d-lg-flex align-items-lg-center justify-content-center">
