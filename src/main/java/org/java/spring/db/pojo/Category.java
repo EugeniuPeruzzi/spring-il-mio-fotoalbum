@@ -1,5 +1,6 @@
 package org.java.spring.db.pojo;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.hibernate.validator.constraints.Length;
@@ -45,7 +46,17 @@ public class Category {
         this.name = name;
     }
     
-    @Override
+    public List<Photo> getPhotos() {
+		return photos;
+	}
+	public void setPhotos(List<Photo> photos) {
+		this.photos = photos;
+	}
+	public void setPhotos(Photo... photos) {
+        setPhotos(Arrays.asList(photos));
+    }
+	
+	@Override
     public String toString() {
         return "[" + getId() + "] " + getName();
     }

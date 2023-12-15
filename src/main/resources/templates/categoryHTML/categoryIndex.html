@@ -1,0 +1,48 @@
+<!-- Head html -->
+<div th:replace="frags/frags :: headFragment"></div>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <h1 class="text-center my-4">Categorie</h1>
+            <div class="col">
+                <div class="d-flex justify-content-end">
+                    <a th:href="@{/category/create}" class="btn btn-success me-2">Crea una categoria</a>
+                    <a th:href="@{/}" class="btn btn-primary">Back</a>
+                </div>
+                <div class="p-3">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome Categoria</th>
+                                <th>Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Ciclo attraverso le categorie -->
+                            <tr th:each="category : ${categories}">
+                                <td th:text="${category.id}"></td>
+                                <td th:text="${category.name}"></td>
+                                <td>
+                                    <!-- Pulsante Modifica -->
+                                    <a th:href="@{/category/edit/{id}(id=${category.id})}"
+                                        class="btn btn-warning">Modifica</a>
+
+                                    <!-- Form per il pulsante Elimina -->
+                                    <form th:action="@{/categories/delete/{id}(id=${category.id})}" method="post"
+                                        style="display:inline;">
+                                        <button type="submit" class="btn btn-danger">Elimina</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
