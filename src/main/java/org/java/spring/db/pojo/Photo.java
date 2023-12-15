@@ -32,6 +32,7 @@ public class Photo {
     
     @Column(nullable = false)
     @URL(protocol = "https", message = "Devi inserire un URL valido (Protocollo HTTPS)")
+    @NotBlank(message = "Non deve contenere spazi")
     private String url;
     
     @Column(nullable = false)

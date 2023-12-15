@@ -1,0 +1,37 @@
+<!-- Head html -->
+<div th:replace="frags/frags :: headFragment"></div>
+
+<body>
+    <main>
+        <div class="container border rounded-5 shadow my-5">
+            <div class="row justify-content-center p-4">
+                <div class="col-12 d-flex justify-content-center">
+                    <div class="row">
+                        <div class="col-5 p-3">
+                            <img th:src="${photo.url}" class="card-img-top" alt="foto"
+                                style="width: 30rem; aspect-ratio: 16/9;">
+                        </div>
+                        <div class="col-7 p-3">
+                            <h3 th:text="${photo.name}" class="card-title my-4"></h3>
+                            <p th:text="${photo.description}" class="card-text my-4"></p>
+                            <!-- Visibilita della photo -->
+                            <p class="text-center">
+                                <span th:if="${photo.visible}">
+                                    <i class="fa-solid fa-eye"></i> La foto è visibile
+                                </span>
+                                <span th:unless="${photo.visible}">
+                                    <i class="fa-solid fa-eye-slash"></i> La foto non è visibile
+                                </span>
+                            </p>
+                            <a th:href="@{/}" class="btn btn-primary">Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
+
+</html>

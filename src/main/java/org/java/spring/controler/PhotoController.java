@@ -42,7 +42,7 @@ public class PhotoController {
     }
     
 //    PHOTO SHOW
-    @GetMapping("/photos/{id}")
+    @GetMapping("/photo/{id}")
     public String getPhoto(Model model, @PathVariable int id) {
         
         Photo photo = photoService.findById(id);
@@ -53,7 +53,7 @@ public class PhotoController {
         
         model.addAttribute("categories", categories);
         
-        return "photo";
+        return "photoHTML/photoShow";
     }
     
     @GetMapping("/photos/create")
