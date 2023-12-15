@@ -1,65 +1,87 @@
 package org.java.spring.auth.conf;
 
 import org.java.spring.auth.db.serv.UserService;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
-@CrossOrigin
 @Configuration
 public class AuthConf {
-	
-	// Configura la catena di filtri di sicurezza HTTP.
-	@Bean
+
+    @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.csrf().disable(); // Opzionale: disabilita CSRF
-		http.cors().disable();
+        
         http.authorizeHttpRequests()
-//        	   .requestMatchers("/api/**").permitAll()
-        	   .requestMatchers("/**").permitAll()
-//            .requestMatchers("/pizza/create/**").hasAuthority("admin")
-//            .requestMatchers("/pizza/edit/**").hasAuthority("admin")
-//            .requestMatchers("/pizza/delete/**").hasAuthority("admin")
-//            .requestMatchers("/pizzas/{id}/discount**").hasAuthority("admin")
-//            .requestMatchers("/pizzas/{pizzaId}/discount/edit/{discountId}**").hasAuthority("admin")
-//            .requestMatchers("/ingredient/create/**").hasAuthority("admin")
-//            .requestMatchers("/ingredients**").hasAuthority("admin")
-//            .requestMatchers("/ingredient/new**").hasAuthority("admin")
-//            .requestMatchers("/ingredient/delete/{id}**").hasAuthority("admin")
-//            .requestMatchers("/**").hasAnyAuthority("user" , "admin")
+        	.requestMatchers("/api/**").permitAll()
+            .requestMatchers("/**").hasAuthority("admin")
             .and().formLogin()
-            .and().logout();
+            .and().logout()
+        ;
         
         return http.build();
     }
-	
-    // Crea un bean per il servizio di gestione degli utenti.
+    
     @Bean
     UserDetailsService userDetailsService() {
-	    return new UserService();
-	}
-	
-    // Crea un bean per l'encoder delle password (utilizza BCrypt).
+        return new UserService();
+    }
+    
     @Bean
-	public static PasswordEncoder passwordEncoder() {
+    public static PasswordEncoder passwordEncoder() {
       return new BCryptPasswordEncoder();
     }
     
-    // Crea un bean per il provider di autenticazione DAO.
     @Bean
     DaoAuthenticationProvider authenticationProvider() {
-    	DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-    	authProvider.setUserDetailsService(userDetailsService());
-    	authProvider.setPasswordEncoder(passwordEncoder());
-    	return authProvider;
+      
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+   
+        authProvider.setUserDetailsService(userDetailsService());
+        authProvider.setPasswordEncoder(passwordEncoder());
+   
+        return authProvider;
     }
     
-    // Un "bean" è un oggetto gestito dal framework e configurato per svolgere una specifica funzionalità nell'applicazione.
-    // Questi bean vengono creati e gestiti dal container di inversione di controllo (IoC) di Spring.
+    @Bean
+    FilterRegistrationBean<CorsFilter> getCorsSettings() {
+        
+        final CorsConfiguration config = new CorsConfiguration();
+        
+        // OPTIONS
+//        config.setAllowCredentials(true);
+        
+        config.addAllowedOrigin("http://localhost:5173"); // DEVELOP FE SERVER
+        
+        // HEADERS
+        config.addAllowedHeader("Content-Type");
+        config.addAllowedHeader("Authorization");
+        config.addAllowedHeader("X-XSRF-TOKEN");
+        config.addAllowedHeader("Accept");
+        
+        // METHODS
+        config.addAllowedMethod(HttpMethod.GET);
+        config.addAllowedMethod(HttpMethod.POST);
+        config.addAllowedMethod(HttpMethod.PUT);
+        config.addAllowedMethod(HttpMethod.DELETE);
+        
+        // SET CONFIG ON PATHS
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        
+        final FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(new CorsFilter(source));
+        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        
+        return bean;
+    }
 }
