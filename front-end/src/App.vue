@@ -5,6 +5,7 @@ import axios from 'axios';
 
 // IMPORT COMPONENTS
 import PhotoIndex from './components/PhotoIndex.vue';
+import ContactForm from './components/ContactForm.vue';
 
 // DATA
 const photos = ref(null);
@@ -20,13 +21,8 @@ onMounted(getPhotos);
 </script>
 
 <template>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12">
-        <photo-index :photos="photos" />
-      </div>
-    </div>
-  </div>
+  <photo-index :photos="photos" />
+  
 </template>
 
 <style lang="scss" >
