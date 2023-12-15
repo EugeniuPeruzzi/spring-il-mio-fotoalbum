@@ -1,0 +1,79 @@
+<!-- Head html -->
+<div th:replace="frags/frags :: headFragment"></div>
+
+<body>
+    <div class="container">
+        <div class="d-flex justify-content-center mt-4 p-2">
+            <div class="col-6">
+                <h1 sec:authentication="name" class="m-0"></h1>
+            </div>
+            <div class="col-6 d-flex justify-content-end">
+                <a th:href="@{/logout}" class="btn btn-secondary">Log-Out</a>
+            </div>
+        </div>
+        <div class="row">
+            <h1 class="text-center mt-4">Che voglia di pizza....</h1>
+            <!-- Frammento di ricerca -->
+            <div th:replace="frags/frags :: searchFrag"></div>
+            <!-- Pulsante per aggiungere una nuova foto -->
+            <!--  sec:authorize="hasAnyAuthority('admin')" -->
+            <div class="col-12 d-flex justify-content-center">
+                <a href="#">
+                    <button class="btn btn-success ms-2" type="button">Aggiungi Foto</button>
+                </a>
+                <a href="#">
+                    <button class="btn btn-success ms-2" type="button">Crea categoria</button>
+                </a>
+            </div>
+            <!-- Lista delle foto -->
+            <div class="col-12">
+                <div class="d-flex flex-wrap justify-content-center">
+                    <!-- Messaggio se non ci sono foto -->
+                    <div th:if="${photos.isEmpty()}">
+                        <h1>Non ci sono foto</h1>
+                    </div>
+                    <!-- Loop attraverso tutte le foto -->
+                    <div class="m-3" th:each="photo : ${photos}">
+                        <!-- Card per ogni photo -->
+                        <div class="card p-2" style="width: 18rem;">
+                            <!-- Immagine della photo -->
+                            <img th:src="${photo.url}" class="card-img-top" alt="foto" style="height: 250px;">
+
+                            <!-- Nome della photo -->
+                            <h5 th:text=" ${photo.name}" class="text-center mt-1 text-capitalize"></h5>
+                            <!-- Descrizione della photo -->
+                            <p class="card-text overflow-auto p-3" th:text="${photo.description}"
+                                style="height: 10rem;">
+                            </p>
+                            <!-- Visibilita della photo -->
+                            <p>
+                                <span th:if="${photo.visible}">
+                                    <i class="fa-solid fa-eye"></i> La foto è visibile
+                                </span>
+                                <span th:unless="${photo.visible}">
+                                    <i class="fa-solid fa-eye-slash"></i> La foto non è visibile
+                                </span>
+                            </p>
+
+                            <!-- Link per vedere i dettagli della photo -->
+                            <a th:href="@{/photo/{photoId}(photoId=${photo.id})}" class="btn btn-sm btn-primary">Vedi la
+                                foto</a>
+
+                            <!-- Link per modificare la photo -->
+                            <a th:href="@{/photo/edit/{photoId}(photoId=${photo.id})}" class="btn btn-sm btn-warning"
+                                sec:authorize="hasAuthority('admin')">Modifica</a>
+
+                            <!-- Form per cancellare  -->
+                            <form class="d-inline-block" onsubmit="return confirm('Are you sure?')"
+                                th:action="@{/photo/delete/{photoId}(photoId=${photo.id})}" method="POST"
+                                sec:authorize="hasAuthority('admin')">
+                                <button class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
