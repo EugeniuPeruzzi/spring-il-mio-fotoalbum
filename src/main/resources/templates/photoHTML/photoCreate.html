@@ -1,10 +1,64 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
+<!-- Head html -->
+<div th:replace="frags/frags :: headFragment"></div>
+
 <body>
+	<div class="container">
+		<div class="row">
+			<div class="col-12 text-center">
+				<h1>Aggiungi una foto</h1>
+			</div>
+			<div class="col-12 text-center">
+				<form th:object="${photo}" method="POST">
+					<div class="col-12 d-lg-flex">
+						<div class="col-lg-6 col-12">
+							<div class="form-group my-3">
+								<label for="name" class="control-label mb-2">Nome della foto</label>
+								<input type="text" class="form-control" id="name" th:field="*{name}">
+								<div th:replace="frags/frags :: errorDiv('name')"></div>
+							</div>
+							<div class="form-group my-3">
+								<label for="description" class="control-label mb-2">Descrizione</label>
+								<textarea type="text" class="form-control" id="description"
+									th:field="*{description}"></textarea>
+								<div th:replace="frags/frags :: errorDiv('name')"></div>
+							</div>
+							<div class="form-group my-3">
+								<label for="photo" class="control-label mb-2">Url</label>
+								<input type="text" class="form-control" id="photo" th:field="*{url}">
+								<div th:replace="frags/frags :: errorDiv('name')"></div>
+							</div>
+						</div>
+						<div class="col-lg-6 col-12 text-start">
+							<h5 class="pt-5 ms-4">Categorie:</h5>
+							<div class="form-group my-3 d-flex flex-wrap">
+								<div class="col-6 d-flex justify-content-between" th:each="category : ${categories}"
+									th:object="${category}">
+									<label th:for="${'category-' + category.id}"
+										class="control-label mb-2 mx-4">[[*{name}]]</label>
+									<input type="checkbox" class="ms-3 mx-4" th:id="${'category-' + category.id}"
+										th:field="${photo.categories}" th:value="*{id}">
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="text-center my-5 d-lg-flex align-items-lg-center justify-content-center">
+						<div class="form-check form-switch text-center d-flex  col-lg-6 col-12">
+							<label class="form-check-label" for="flexSwitchCheckChecked">Vuoi rendere la tua foto
+								invisibile al pubblico?</label>
+							<span class="ms-5">no</span>
+							<input class="form-check-input mx-2" type="checkbox" id="flexSwitchCheckChecked"
+								th:value="checked ? false : true" th:field="*{visible}">
+							<span>si</span>
+						</div>
+						<div class="col-lg-6 col-12 my-5 my-lg-0">
+							<button type="submit" class="btn btn-success">Aggiungi</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
 </body>
+
 </html>

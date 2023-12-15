@@ -56,7 +56,7 @@ public class PhotoController {
         return "photoHTML/photoShow";
     }
     
-    @GetMapping("/photos/create")
+    @GetMapping("/photo/create")
     public String createPhoto(Model model) {
         
         Photo photo = new Photo();
@@ -65,9 +65,9 @@ public class PhotoController {
         model.addAttribute("photo", photo);
         model.addAttribute("categories", categories);
         
-        return "photoINDEX/photoCreate";
+        return "photoHTML/photoCreate";
     }
-    @PostMapping("/photos/create")
+    @PostMapping("/photo/create")
     public String storePhoto(Model model, @Valid @ModelAttribute Photo photo, BindingResult bindingResult) {
 
         return savePhoto(model, photo, bindingResult);
@@ -82,7 +82,7 @@ public class PhotoController {
         model.addAttribute("photo", photo);
         model.addAttribute("categories", categories);
         
-        return "photo-form";
+        return "photoHTML/photoCreate";
     }
     @PostMapping("photos/edit/{id}")
     public String updatePhoto(Model model, @Valid @ModelAttribute Photo photo, BindingResult bindingResult) {
@@ -112,7 +112,7 @@ public class PhotoController {
             System.out.println(bindingResult);
 
             model.addAttribute("photo", photo);
-            return "photo-form";
+            return "photoHTML/photoCreate";
         }
 
         photoService.save(photo);
