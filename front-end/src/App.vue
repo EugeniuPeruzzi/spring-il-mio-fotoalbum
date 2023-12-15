@@ -1,6 +1,5 @@
 <script setup>
 import HelloWorld from './components/HelloWorld.vue'
-import general from './styles/general.css'
 </script>
 
 <template>
@@ -15,6 +14,6 @@ import general from './styles/general.css'
   <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style scoped>
-
+<style lang="scss" scoped>
+@use './styles/generals.scss' as *;
 </style>
