@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="row">
-            <h1 class="text-center mt-4">Che voglia di pizza....</h1>
+            <h1 class="text-center mt-4">Il tuo album</h1>
             <!-- Frammento di ricerca -->
             <div th:replace="frags/frags :: searchFrag"></div>
             <!-- Pulsante per aggiungere una nuova foto -->
@@ -46,7 +46,7 @@
                                 style="height: 10rem;">
                             </p>
                             <!-- Visibilita della photo -->
-                            <p>
+                            <p class="text-center">
                                 <span th:if="${photo.visible}">
                                     <i class="fa-solid fa-eye"></i> La foto è visibile
                                 </span>
