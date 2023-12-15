@@ -1,5 +1,7 @@
 package org.java.spring.db.pojo;
 
+import java.util.List;
+
 import org.hibernate.validator.constraints.Length;
 
 import jakarta.persistence.Column;
@@ -7,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -16,10 +19,13 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     
-    @Column(length = 32, nullable = false)
+    @Column(length = 60, nullable = false)
     @NotBlank(message = "Il nome non può essere vuoto")
-    @Length(min = 3, max = 20, message = "Il nome della categoria deve essere compreso tra 3 e 20 caratteri")
+    @Length(min = 3, max = 60, message = "Il nome della categoria deve essere compreso tra 3 e 60 caratteri")
     private String name;
+    
+    @ManyToMany(mappedBy = "categories")
+    private List<Photo> photos;
     
     public Category() { }
     public Category (String name) {

@@ -1,5 +1,8 @@
 package org.java.spring.db.pojo;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 
@@ -8,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -23,7 +27,7 @@ public class Photo {
     private String name;
     
     @Column(columnDefinition = "TEXT")
-    @Length(min = 5, max = 100, message = "La descrizione della foto deve essere compresa tra 5 e 100 caratteri")
+    @Length(min = 5, max = 500, message = "La descrizione della foto deve essere compresa tra 5 e 500 caratteri")
     private String description;
     
     @Column(nullable = false)
@@ -33,12 +37,17 @@ public class Photo {
     @Column(nullable = false)
     private boolean visible;
     
+    
+    @ManyToMany
+    private List<Category> categories;
+    
     public Photo() { }
-    public Photo (String name, String description, String url, boolean visible) {
+    public Photo (String name, String description, String url, boolean visible, Category... categories) {
         setName(name);
         setDescription(description);
         setUrl(url);
         setVisible(visible);
+        setCategories(categories);
     }
     
     public int getId() {
@@ -72,7 +81,18 @@ public class Photo {
         this.visible = visible;
     }
     
-    @Override
+    
+    public List<Category> getCategories() {
+		return categories;
+	}
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
+	
+	public void setCategories(Category... categories) {
+        setCategories(Arrays.asList(categories));
+    }
+	@Override
     public String toString() {
         return "[" + getId() + "] " + getName();
     }}
