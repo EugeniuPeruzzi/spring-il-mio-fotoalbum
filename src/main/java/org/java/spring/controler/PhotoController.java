@@ -83,11 +83,17 @@ public class PhotoController {
         
         return "photoHTML/photoCreate";
     }
+    
     @PostMapping("/photo/create")
-    public String storePhoto(Model model, @Valid @ModelAttribute Photo photo, BindingResult bindingResult) {
+    public String storePhoto(Model model, @Valid @ModelAttribute Photo photo, BindingResult bindingResult, Authentication authentication) {
+        if (authentication != null && authentication.getPrincipal() instanceof User) {
+            User user = (User) authentication.getPrincipal();
+            photo.setUser(user); 
+        }
 
         return savePhoto(model, photo, bindingResult);
     }
+
     
     @GetMapping("photo/edit/{id}")
     public String editPhoto(Model model, @PathVariable int id) {
@@ -101,8 +107,12 @@ public class PhotoController {
         return "photoHTML/photoCreate";
     }
     @PostMapping("photo/edit/{id}")
-    public String updatePhoto(Model model, @Valid @ModelAttribute Photo photo, BindingResult bindingResult) {
-        
+    public String updatePhoto(Model model, @Valid @ModelAttribute Photo photo, BindingResult bindingResult, Authentication authentication) {
+        if (authentication != null && authentication.getPrincipal() instanceof User) {
+            User user = (User) authentication.getPrincipal();
+            photo.setUser(user); 
+        }
+    	
         return savePhoto(model, photo, bindingResult);
     }
 
