@@ -90,6 +90,16 @@ public class User implements UserDetails {
  		this.photos = photos;
  	}
  	
+ 	
+    public boolean isAdmin() {
+        return roles.stream().anyMatch(role -> role.getRoleName().equals("admin"));
+    }
+
+    public boolean isSuperAdmin() {
+        return roles.stream().anyMatch(role -> role.getRoleName().equals("superadmin"));
+    }
+
+ 	
     // Imposta i ruoli dell'utente.
     public void setRoles(Role... roles) {
         setRoles(List.of(roles));

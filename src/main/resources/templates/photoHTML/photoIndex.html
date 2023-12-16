@@ -17,7 +17,7 @@
             <div th:replace="frags/frags :: searchFrag"></div>
             <!-- Pulsante per aggiungere una nuova foto -->
             <!--  sec:authorize="hasAnyAuthority('admin')" -->
-            <div class="col-12 d-flex justify-content-center" sec:authorize="hasAnyAuthority('admin')">
+            <div class="col-12 d-flex justify-content-center" sec:authorize="hasAnyAuthority('admin', 'superadmin')">
                 <a href="/photo/create">
                     <button class="btn btn-success ms-2" type="button">Aggiungi Foto</button>
                 </a>
@@ -66,12 +66,12 @@
                                 <!-- Link per modificare la photo -->
                                 <a th:href="@{/photo/edit/{photoId}(photoId=${photo.id})}"
                                     class="btn btn-sm btn-warning m-1"
-                                    sec:authorize="hasAuthority('admin')">Modifica</a>
+                                    sec:authorize="hasAnyAuthority('admin', 'superadmin')">Modifica</a>
 
                                 <!-- Form per cancellare  -->
                                 <form class="d-inline-block m-1" onsubmit="return confirm('Are you sure?')"
                                     th:action="@{/photo/delete/{photoId}(photoId=${photo.id})}" method="POST"
-                                    sec:authorize="hasAuthority('admin')">
+                                    sec:authorize="hasAnyAuthority('admin', 'superadmin')">
                                     <button class="btn btn-sm btn-danger">Delete</button>
                                 </form>
                             </div>

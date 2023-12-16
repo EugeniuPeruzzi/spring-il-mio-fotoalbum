@@ -33,29 +33,37 @@ public class PhotoController {
 //    PHOTO INDEX
     @GetMapping
     public String getPhotos(Model model, @RequestParam(required = false) String name) {
-        
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication != null && authentication.getPrincipal() instanceof User) {
             User user = (User) authentication.getPrincipal();
-            int userId = user.getId();
 
-            List<Photo> photos = name == null
-                                ? photoService.findByUserId(userId)
-                                : photoService.findByName(name, userId);
+            if (user.isAdmin()) {
+                // Se l'utente è un admin, mostra solo le foto associate al suo ID
+                List<Photo> photos = name == null
+                        ? photoService.findByUserId(user.getId())
+                        : photoService.findByName(name, user.getId());
 
-            model.addAttribute("photos", photos);
+                model.addAttribute("photos", photos);
+            } else if (user.isSuperAdmin()) {
+                // Se l'utente è un superadmin, mostra tutte le foto
+                List<Photo> photos = name == null
+                        ? photoService.findAll()
+                        : photoService.findByNameSuperAdmin(name);
+
+                model.addAttribute("photos", photos);
+            }
+
             model.addAttribute("name", name == null ? "" : name);
-            model.addAttribute("userId", userId);
+            model.addAttribute("userId", user.getId());
+
             return "photoHTML/photoIndex";
         }
 
-        // Se non riesci ad ottenere l'ID dall'utente autenticato, gestisci la situazione di conseguenza
-        return "redirect:/login"; // O un'altra pagina di login o una pagina di errore, a seconda delle tue esigenze
+        
+        return "redirect:/login";
     }
-
-    
-  
     
 //    PHOTO SHOW
     @GetMapping("/photo/{id}")

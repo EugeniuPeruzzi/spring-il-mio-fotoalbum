@@ -22,6 +22,9 @@ public class PhotoService {
     public List<Photo> findByName(String name, int userId){
         return photoRepository.findByNameContainingIgnoreCaseAndUser_Id(name, userId);
     }
+    public List<Photo> findByNameSuperAdmin(String name){
+        return photoRepository.findByNameContainingIgnoreCase(name);
+    }
     public void save(Photo photo) {
         photoRepository.save(photo);
     }
