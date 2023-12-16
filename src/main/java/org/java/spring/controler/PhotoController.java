@@ -114,14 +114,35 @@ public class PhotoController {
         
         return "photoHTML/photoCreate";
     }
+    
     @PostMapping("photo/edit/{id}")
-    public String updatePhoto(Model model, @Valid @ModelAttribute Photo photo, BindingResult bindingResult, Authentication authentication) {
+    public String updatePhoto(Model model, @Valid @ModelAttribute Photo updatedPhoto, BindingResult bindingResult, Authentication authentication) {
+        if (bindingResult.hasErrors()) {
+            // Handle validation errors
+            model.addAttribute("photo", updatedPhoto);
+            return "photoHTML/photoCreate";
+        }
+
         if (authentication != null && authentication.getPrincipal() instanceof User) {
             User user = (User) authentication.getPrincipal();
-            photo.setUser(user); 
+            
+            Photo photo = photoService.findById(updatedPhoto.getId());
+
+            if (user.isSuperAdmin()) {
+                photo.setVisible(updatedPhoto.isVisible());
+            } else {
+                photo.setName(updatedPhoto.getName());
+                photo.setDescription(updatedPhoto.getDescription());
+                photo.setUrl(updatedPhoto.getUrl());
+                photo.setCategories(updatedPhoto.getCategories());
+                photo.setVisible(updatedPhoto.isVisible());
+                
+            }
+
+            photoService.save(photo);
         }
-    	
-        return savePhoto(model, photo, bindingResult);
+
+        return "redirect:/";
     }
 
     @PostMapping("/photo/delete/{id}")
