@@ -2,6 +2,7 @@ package org.java.spring.controler;
 
 import java.util.List;
 
+import org.java.spring.auth.db.pojo.User;
 import org.java.spring.db.pojo.Category;
 import org.java.spring.db.pojo.Photo;
 import org.java.spring.db.serv.CategoryService;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import jakarta.validation.Valid;
 
@@ -26,21 +29,31 @@ public class PhotoController {
     
     @Autowired
     private CategoryService categoryService;
-
+    
 //    PHOTO INDEX
     @GetMapping
     public String getPhotos(Model model, @RequestParam(required = false) String name) {
         
-        List<Photo> photos = name == null
-                            ? photoService.findAll()
-                            : photoService.findByName(name);
-        
-       
-        
-        model.addAttribute("photos", photos);
-        model.addAttribute("name", name == null ? "" : name);
-        return "photoHTML/photoIndex";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.getPrincipal() instanceof User) {
+            User user = (User) authentication.getPrincipal();
+            int userId = user.getId();
+
+            List<Photo> photos = name == null
+                                ? photoService.findByUserId(userId)
+                                : photoService.findByName(name, userId);
+
+            model.addAttribute("photos", photos);
+            model.addAttribute("name", name == null ? "" : name);
+            model.addAttribute("userId", userId);
+            return "photoHTML/photoIndex";
+        }
+
+        // Se non riesci ad ottenere l'ID dall'utente autenticato, gestisci la situazione di conseguenza
+        return "redirect:/login"; // O un'altra pagina di login o una pagina di errore, a seconda delle tue esigenze
     }
+
     
   
     

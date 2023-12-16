@@ -19,8 +19,8 @@ public class PhotoService {
     public Photo findById(int id) {
         return photoRepository.findById(id).get();
     }
-    public List<Photo> findByName(String name){
-        return photoRepository.findByNameContainingIgnoreCase(name);
+    public List<Photo> findByName(String name, int userId){
+        return photoRepository.findByNameContainingIgnoreCaseAndUser_Id(name, userId);
     }
     public void save(Photo photo) {
         photoRepository.save(photo);
@@ -36,6 +36,10 @@ public class PhotoService {
     
     public List<Photo> findByVisibleTrue(){
     	return photoRepository.findByVisibleTrue();
+    }
+    
+    public List<Photo> findByUserId(int id){
+    	return photoRepository.findByUserId(id);
     }
    
 }
