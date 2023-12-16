@@ -4,23 +4,24 @@
 <body>
     <div class="container">
         <div class="row">
-            <h2 class="text-center">Tabella Contatti</h2>
+            <h2 class="text-center my-5">Tabella Contatti</h2>
             <div class="col">
-                <table>
+                <table class="table">
                     <thead>
                         <tr>
-                            <th>Nome</th>
-                            <th>Email</th>
-                            <th>Messaggio</th>
+                            <th scope="col">#</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Message</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Utilizzo di Thymeleaf per il ciclo forEach -->
                         <tr th:each="contatto : ${contatti}">
-                            <!-- Accesso alle proprietà dell'oggetto contatto -->
-                            <td th:text="${contatto.nome}">Nome</td>
-                            <td th:text="${contatto.email}">Email</td>
-                            <td th:text="${contatto.messaggio}">Messaggio</td>
+                            <th scope="row" th:text="${contatto.id}"></th>
+                            <td th:text="${contatto.nome}"></td>
+                            <td th:text="${contatto.email}"></td>
+                            <td th:text="${contatto.messaggio}" class="text-break" style="max-width: 100px;">
+                            </td>
                         </tr>
                     </tbody>
                 </table>
