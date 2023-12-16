@@ -130,6 +130,11 @@ public class PhotoController {
 
             if (user.isSuperAdmin()) {
                 photo.setVisible(updatedPhoto.isVisible());
+                photo.setChecked(updatedPhoto.isChecked());
+                if (photo.isChecked()) {
+                    photo.setVisible(false);
+                }
+
             } else {
                 photo.setName(updatedPhoto.getName());
                 photo.setDescription(updatedPhoto.getDescription());

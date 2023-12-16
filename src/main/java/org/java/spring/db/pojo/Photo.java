@@ -42,7 +42,9 @@ public class Photo {
     @Column(nullable = false)
     private boolean visible;
     
-    @ManyToMany
+    private boolean checked;
+    
+	@ManyToMany
     @Column(nullable=false)
     @Size(min = 1, message = "Devi selezionare almeno una categoria")
     private List<Category> categories;
@@ -53,13 +55,14 @@ public class Photo {
 
 
 	public Photo() { }
-    public Photo (String name, String description, String url, boolean visible,User user,Category... categories) {
+    public Photo (String name, String description, String url, boolean visible,User user , boolean checked ,Category... categories) {
         setName(name);
         setDescription(description);
         setUrl(url);
         setVisible(visible);
         setCategories(categories);
         setUser(user);
+        setChecked(checked);
 
     }
     
@@ -98,6 +101,13 @@ public class Photo {
 	}
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+    public boolean isChecked() {
+		return checked;
+	}
+	public void setChecked(boolean checked) {
+		this.checked = checked;
 	}
 
 	public List<Category> getCategories() {
